@@ -1,57 +1,73 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">
+    <button class="btn btn-link text-white p-0 me-3" type="button"
+      data-bs-toggle="offcanvas" data-bs-target="#categoryMenu">
+      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+    </button>
+
+    <a class="navbar-brand fw-bold flex-grow-1" routerLink="/">
       ShopNova
     </a>
 
-    <button class="navbar-toggler" type="button"
-      data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <ul class="navbar-nav flex-row align-items-center gap-2">
+      <li class="nav-item">
+        <a class="nav-link position-relative" routerLink="/cart">
+          Carrito
+          @if (cart.totalItems() > 0) {
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ cart.totalItems() }}
+            </span>
+          }
+        </a>
+      </li>
 
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav me-auto">
+      @if (auth.isAdmin()) {
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+          <a class="nav-link text-warning" routerLink="/admin">Admin</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/products" routerLinkActive="active">Productos</a>
-        </li>
-        @if (auth.isAdmin()) {
-          <li class="nav-item">
-            <a class="nav-link text-warning" routerLink="/admin" routerLinkActive="active">Admin</a>
-          </li>
-        }
-      </ul>
+      }
 
-      <ul class="navbar-nav align-items-center gap-2">
-        <li class="nav-item">
-          <a class="nav-link position-relative" routerLink="/cart">
-            Carrito
-            @if (cart.totalItems() > 0) {
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ cart.totalItems() }}
-              </span>
-            }
+      @if (auth.isLoggedIn()) {
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            {{ auth.currentUser()?.name }}
           </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button class="dropdown-item" (click)="auth.logout()">Cerrar sesion</button></li>
+          </ul>
         </li>
-
-        @if (auth.isLoggedIn()) {
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-              {{ auth.currentUser()?.name }}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><button class="dropdown-item" (click)="auth.logout()">Cerrar sesion</button></li>
-            </ul>
-          </li>
-        } @else {
-          <li class="nav-item">
-            <a class="btn btn-outline-light btn-sm" routerLink="/auth/login">Ingresar</a>
-          </li>
-        }
-      </ul>
-    </div>
+      } @else {
+        <li class="nav-item">
+          <a class="btn btn-outline-light btn-sm" routerLink="/auth/login">Ingresar</a>
+        </li>
+      }
+    </ul>
   </div>
 </nav>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="categoryMenu">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title fw-bold">ShopNova</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <a class="category-link" routerLink="/" data-bs-dismiss="offcanvas">
+      Inicio
+    </a>
+    <a class="category-link" [routerLink]="['/products']" data-bs-dismiss="offcanvas">
+      Todos los productos
+    </a>
+    <div class="category-section-title">Categorias</div>
+    <a class="category-link" [routerLink]="['/products']" [queryParams]="{category: 'Tecnologia'}" data-bs-dismiss="offcanvas">
+      Tecnologia
+    </a>
+    <a class="category-link" [routerLink]="['/products']" [queryParams]="{category: 'Hogar'}" data-bs-dismiss="offcanvas">
+      Hogar
+    </a>
+    <a class="category-link" [routerLink]="['/products']" [queryParams]="{category: 'Comida'}" data-bs-dismiss="offcanvas">
+      Comida
+    </a>
+  </div>
+</div>
