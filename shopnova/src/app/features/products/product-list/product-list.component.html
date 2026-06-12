@@ -1,0 +1,36 @@
+﻿<div class="container py-5">
+  <h2 class="fw-bold mb-4">Productos</h2>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <input class="form-control" type="search" placeholder="Buscar producto..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)">
+    </div>
+    <div class="col-md-3">
+      <select class="form-select"
+        [value]="selectedCategory()"
+        (change)="selectedCategory.set($any($event.target).value)">
+        <option value="">Todas las categorias</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-center text-muted small">
+      {{ filtered().length }} productos encontrados
+    </div>
+  </div>
+
+  <div class="row g-4">
+    @for (product of filtered(); track product.id) {
+      <div class="col-sm-6 col-lg-3">
+        <app-product-card [product]="product" />
+      </div>
+    } @empty {
+      <div class="col-12 text-center text-muted py-5">
+        No se encontraron productos.
+      </div>
+    }
+  </div>
+</div>

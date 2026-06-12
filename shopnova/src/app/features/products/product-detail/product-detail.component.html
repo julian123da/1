@@ -1,0 +1,32 @@
+﻿<div class="container py-5">
+  <a routerLink="/products" class="text-decoration-none text-muted small mb-4 d-inline-block">
+    Volver a productos
+  </a>
+
+  @if (product(); as p) {
+    <div class="row g-5 align-items-start">
+      <div class="col-md-5">
+        <img [src]="p.image" [alt]="p.name"
+          class="img-fluid rounded-4 shadow-sm w-100" style="max-height:400px;object-fit:cover">
+      </div>
+      <div class="col-md-7">
+        <span class="badge bg-secondary mb-2">{{ p.category }}</span>
+        <h1 class="fw-bold h2">{{ p.name }}</h1>
+        <div class="text-warning mb-2">Calificacion: {{ p.rating }} / 5</div>
+        <p class="text-muted">{{ p.description }}</p>
+        <div class="fs-3 fw-bold text-primary mb-3">{{ p.price | currencyFormat }}</div>
+
+        @if (p.stock > 0) {
+          <p class="text-success small mb-3">{{ p.stock }} unidades disponibles</p>
+          <button class="btn btn-dark btn-lg px-5" (click)="addToCart()">
+            {{ added() ? 'Agregado' : 'Agregar al carrito' }}
+          </button>
+        } @else {
+          <p class="text-danger fw-semibold">Sin stock disponible</p>
+        }
+      </div>
+    </div>
+  } @else {
+    <p class="text-muted">Producto no encontrado.</p>
+  }
+</div>

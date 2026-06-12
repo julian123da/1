@@ -1,0 +1,15 @@
+﻿.product-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+  }
+}
+
+.product-img {
+  height: 220px;
+  object-fit: cover;
+}

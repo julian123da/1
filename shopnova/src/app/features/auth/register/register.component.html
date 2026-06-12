@@ -1,0 +1,38 @@
+﻿<div class="min-vh-100 d-flex align-items-center bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="card shadow border-0 rounded-4 p-4">
+          <h4 class="fw-bold mb-1">Crear cuenta</h4>
+          <p class="text-muted small mb-4">Unete a ShopNova hoy</p>
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input class="form-control" formControlName="name" placeholder="Tu nombre">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input class="form-control" type="email" formControlName="email"
+                placeholder="tu@email.com">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Contrasena</label>
+              <input class="form-control" type="password" formControlName="password"
+                placeholder="******">
+            </div>
+            <button class="btn btn-dark w-100" type="submit"
+              [disabled]="form.invalid">
+              Registrarse
+            </button>
+          </form>
+
+          <p class="text-center small mt-3 mb-0">
+            Ya tienes cuenta?
+            <a routerLink="/auth/login" class="text-decoration-none">Ingresar</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

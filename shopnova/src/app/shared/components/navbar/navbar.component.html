@@ -1,0 +1,57 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      ShopNova
+    </a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/products" routerLinkActive="active">Productos</a>
+        </li>
+        @if (auth.isAdmin()) {
+          <li class="nav-item">
+            <a class="nav-link text-warning" routerLink="/admin" routerLinkActive="active">Admin</a>
+          </li>
+        }
+      </ul>
+
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item">
+          <a class="nav-link position-relative" routerLink="/cart">
+            Carrito
+            @if (cart.totalItems() > 0) {
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ cart.totalItems() }}
+              </span>
+            }
+          </a>
+        </li>
+
+        @if (auth.isLoggedIn()) {
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              {{ auth.currentUser()?.name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><button class="dropdown-item" (click)="auth.logout()">Cerrar sesion</button></li>
+            </ul>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="btn btn-outline-light btn-sm" routerLink="/auth/login">Ingresar</a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
